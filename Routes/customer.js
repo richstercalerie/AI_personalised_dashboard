@@ -38,6 +38,7 @@ router.post('/customer', verifyToken, verifyAdmin, async (req, res) => {
     await customer.save();
     res.status(201).json({ message: 'Customer saved!', customer });
   } catch (error) {
+    console.error('Error saving customer:', error);
     res.status(400).json({ error: error.message });
   }
 });

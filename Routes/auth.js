@@ -51,17 +51,18 @@ router.post('/login', async (req, res) => {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 24 * 60 * 60 * 1000, // 1 day
-      })
-      .json({ message: 'Logged in successfully' });
+      });
+      res.json({ message: 'Logged in successfully', token, success: user.isAdmin });
+
   } catch(err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' ,success: false});
   }
 });
 
 // Logout user (clear cookie)
 router.post('/logout', (req, res) => {
-  res.clearCookie('token').json({ message: 'Logged out successfully' });
+  res.clearCookie('token').json({ message: 'Logged out successfully', success: true });
 });
 router.get('/getUserData', verifyToken, async (req, res) => {
   try {
@@ -70,9 +71,10 @@ router.get('/getUserData', verifyToken, async (req, res) => {
 
     res.json(user);
   } catch (err) {
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error', error: err.message, success: false });
   }
 });
+
 
 
 module.exports = router;
