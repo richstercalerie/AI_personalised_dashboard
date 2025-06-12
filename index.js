@@ -13,6 +13,7 @@ app.use(cors({
   origin: ['http://localhost:5173', 'https://ai-dashboard-frontend-ten.vercel.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   preflightContinue: false,
   optionsSuccessStatus: 204,
 }));
