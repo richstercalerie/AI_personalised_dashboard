@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ message: 'Unauthorized: No token' });
+  let token = req.headers.token || req.cookies.token;
+  if (!token && req.header("Authorization")) {
+      token = req.header("Authorization").replace("Bearer ", "");
+    }
 
   try {
     const decoded = jwt.verify(token, "myverysecuresecretkey123");
