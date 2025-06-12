@@ -10,9 +10,11 @@ connectDB();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://ai-dashboard-frontend-ten.vercel.app/login'],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
 app.use(cookieParser());
 const authRoutes = require('./Routes/auth');
