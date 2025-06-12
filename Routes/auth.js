@@ -46,13 +46,14 @@ router.post('/login', async (req, res) => {
 
     // Set HTTP-only cookie
     res
-      .cookie('token', token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
-      });
-      res.json({ message: 'Logged in successfully', token, success: user.isAdmin });
+  .cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+  });
+
+res.json({ message: 'Logged in successfully', token, success: user.isAdmin });
 
   } catch(err) {
     console.error(err);
@@ -62,7 +63,7 @@ router.post('/login', async (req, res) => {
 
 // Logout user (clear cookie)
 router.post('/logout', (req, res) => {
-  res.clearCookie('token').json({ message: 'Logged out successfully', success: true });
+  res.json({ message: 'Logged out successfully', success: true });
 });
 router.get('/getUserData', verifyToken, async (req, res) => {
   try {
